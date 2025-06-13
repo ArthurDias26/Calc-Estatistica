@@ -42,7 +42,7 @@ export default function ICMedia() {
 
     let IC = [(values.Media - margemErro).toFixed(2), (values.Media + margemErro).toFixed(2)]
 
-    alert(`O intervalo de confiaça é ${IC[0]} : ${IC[1]}`)
+    alert(`O intervalo de confiaça é ${IC[0]} < u > ${IC[1]}`)
     
 
  }
@@ -50,8 +50,7 @@ export default function ICMedia() {
   return (
         
 
-<div className=" w-[600px] m-auto  rounded-xl bg-[#1a1a1a] text-white">
-  <div className=" z-10 rounded-[11px] bg-[#1a1a1a] shadow-[0_0_20px_#3b82f6aa] px-6 py-8">
+<div>
   <h1 className='font-bold text-center text-2xl mb-4'>Insira as informações</h1>
     <Formik
       initialValues={{
@@ -106,7 +105,6 @@ export default function ICMedia() {
       </Form>
     </Formik>
 
-  </div>
 </div>
    
   );
