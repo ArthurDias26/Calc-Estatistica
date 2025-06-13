@@ -3,18 +3,14 @@
 import { Formik, Field, Form, ErrorMessage } from 'formik';
  import * as Yup from 'yup';
 
-export default function TAProporcao() {
+export default function TAMedia() {
 
  const ICMSchema = Yup.object().shape({
-   Amostra: Yup.number()
+   MargemErro: Yup.number()
      .min(0, 'O valor não pode ser negativo!')
      .required('Campo Obrigatório!'),
-   Media: Yup.number()
-     .min(0, 'O valor não pode ser negativo!')
-     .required('Campo Obrigatório!'),
-    DesvPadrao: Yup.number()
-     .min(0, 'O valor não pode ser negativo!')
-     .required('Campo Obrigatório!'),
+    Proporcao: Yup.number()
+     .min(0, 'O valor não pode ser negativo!'),
     GrauConf: Yup.string()
      .min(2)
      .required('Campo Obrigatório!'),
@@ -35,16 +31,15 @@ export default function TAProporcao() {
 
  function CalcICM(values){
     
+    const valorCritico = calcValorCritico(values.GrauConf)
+    const proporcao = values.Proporcao ? values.Proporcao : 0.5
+    
+    const tamanhoAmostra = Math.ceil(valorCritico ** 2 * proporcao * (1 - proporcao) / values.MargemErro **2)
 
-    let valorCritico = calcValorCritico(values.GrauConf)
-
-    let margemErro = valorCritico * values.DesvPadrao / Math.sqrt(values.Amostra)
-
-    let IC = [(values.Media - margemErro).toFixed(2), (values.Media + margemErro).toFixed(2)]
-
-    alert(`O intervalo de confiaça é ${IC[0]} < u > ${IC[1]}`)
     
 
+    alert(`O tamanho da amostra é ${tamanhoAmostra}`)
+    
  }
 
   return (
@@ -54,9 +49,8 @@ export default function TAProporcao() {
   <h1 className='font-bold text-center text-2xl mb-4'>Insira as informações</h1>
     <Formik
       initialValues={{
-        Amostra: '',
-        Media: '',
-        DesvPadrao: '',
+        MargemErro: '',
+        Proporcao: '',
         GrauConf: ''
       }}
 
@@ -64,20 +58,14 @@ export default function TAProporcao() {
       onSubmit={CalcICM}
     >
       <Form>
-        <label htmlFor="Amostra">Tamanho da Amostra:</label>
-        <Field className="block w-[85%] border-b-2 border-white m-auto outline-none" type='number' id="Amostra" name="Amostra" placeholder="" />
-        <div className='text-red-600 font-bold text-center mb-8'><ErrorMessage name='Amostra'/></div>
+        <label htmlFor="MargemErro">Margem de Erro:</label>
+        <Field className="block w-[85%] border-b-2 border-white m-auto outline-none" type='number' id="MargemErro" name="MargemErro" placeholder="" />
+        <div className='text-red-600 font-bold text-center mb-8'><ErrorMessage name='MargemErro'/></div>
         
 
-        <label htmlFor="Media">Média Amostral:</label>
-        <Field className="block w-[85%] border-b-2 border-white m-auto outline-none" type='number' id="Media" name="Media" placeholder="" />
-        <div className='text-red-600 font-bold text-center mb-8'><ErrorMessage name='Media'/></div>
-        
-
-
-        <label htmlFor="DesvPadrao">Desvio Padrão:</label>
-        <Field className="block w-[85%] border-b-2 border-white m-auto outline-none" type='number' id="DesvPadrao" name="DesvPadrao" placeholder="" />
-        <div className='text-red-600 font-bold text-center mb-8'><ErrorMessage name='DesvPadrao'/></div>
+        <label htmlFor="Proporcao">Proporção:</label>
+        <Field className="block w-[85%] border-b-2 border-white m-auto outline-none" type='number' id="Proporcao" name="Proporcao" placeholder="" />
+        <div className='text-red-600 font-bold text-center mb-8'><ErrorMessage name='Proporcao'/></div>
         
 
         <div className='mb-6'>

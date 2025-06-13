@@ -36,11 +36,9 @@ export default function ICMedia() {
  function CalcICM(values){
     
 
-    let valorCritico = calcValorCritico(values.GrauConf)
-
-    let margemErro = valorCritico * values.DesvPadrao / Math.sqrt(values.Amostra)
-
-    let IC = [(values.Media - margemErro).toFixed(2), (values.Media + margemErro).toFixed(2)]
+    const valorCritico = calcValorCritico(values.GrauConf)
+    const margemErro = valorCritico * values.DesvPadrao / Math.sqrt(values.Amostra)
+    const IC = [(values.Media - margemErro).toFixed(2), (values.Media + margemErro).toFixed(2)]
 
     alert(`O intervalo de confiaça é ${IC[0]} < u > ${IC[1]}`)
     

@@ -9,10 +9,7 @@ export default function ICProporcao() {
    Amostra: Yup.number()
      .min(0, 'O valor não pode ser negativo!')
      .required('Campo Obrigatório!'),
-   Media: Yup.number()
-     .min(0, 'O valor não pode ser negativo!')
-     .required('Campo Obrigatório!'),
-    DesvPadrao: Yup.number()
+   Nsucesso: Yup.number()
      .min(0, 'O valor não pode ser negativo!')
      .required('Campo Obrigatório!'),
     GrauConf: Yup.string()
@@ -35,12 +32,10 @@ export default function ICProporcao() {
 
  function CalcICM(values){
     
-
-    let valorCritico = calcValorCritico(values.GrauConf)
-
-    let margemErro = valorCritico * values.DesvPadrao / Math.sqrt(values.Amostra)
-
-    let IC = [(values.Media - margemErro).toFixed(2), (values.Media + margemErro).toFixed(2)]
+    const Proporcao = values.Nsucesso / values.Amostra
+    const valorCritico = calcValorCritico(values.GrauConf)
+    const margemErro = valorCritico * Math.sqrt(Proporcao * (1 - Proporcao) / values.Amostra)
+    const IC = [(Proporcao - margemErro).toFixed(2), (Proporcao + margemErro).toFixed(2)]
 
     alert(`O intervalo de confiaça é ${IC[0]} < u > ${IC[1]}`)
     
@@ -55,8 +50,7 @@ export default function ICProporcao() {
     <Formik
       initialValues={{
         Amostra: '',
-        Media: '',
-        DesvPadrao: '',
+        Nsucesso: '',
         GrauConf: ''
       }}
 
@@ -69,15 +63,9 @@ export default function ICProporcao() {
         <div className='text-red-600 font-bold text-center mb-8'><ErrorMessage name='Amostra'/></div>
         
 
-        <label htmlFor="Media">Média Amostral:</label>
-        <Field className="block w-[85%] border-b-2 border-white m-auto outline-none" type='number' id="Media" name="Media" placeholder="" />
-        <div className='text-red-600 font-bold text-center mb-8'><ErrorMessage name='Media'/></div>
-        
-
-
-        <label htmlFor="DesvPadrao">Desvio Padrão:</label>
-        <Field className="block w-[85%] border-b-2 border-white m-auto outline-none" type='number' id="DesvPadrao" name="DesvPadrao" placeholder="" />
-        <div className='text-red-600 font-bold text-center mb-8'><ErrorMessage name='DesvPadrao'/></div>
+        <label htmlFor="Nsucesso">Número de Sucessos:</label>
+        <Field className="block w-[85%] border-b-2 border-white m-auto outline-none" type='number' id="Nsucesso" name="Nsucesso" placeholder="" />
+        <div className='text-red-600 font-bold text-center mb-8'><ErrorMessage name='Nsucesso'/></div>
         
 
         <div className='mb-6'>
