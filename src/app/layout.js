@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
       <body>
         <div className="font-sans bg-background">
       <header className="mt-6">
-        <h1 className="text-center text-4xl">Calculadora Estatistica</h1>
+        <h1 className="text-center font-bold underline text-4xl">CALCULADORA ESTATÍSTICA</h1>
 
         <p className="text-center mt-4 mb-6">Escolha uma operação:</p>
 
@@ -42,7 +42,7 @@ export default function RootLayout({ children }) {
         {children}
       </main>
 
-      <footer className="h-12 w-full absolute bottom-0 left-0 flex justify-center items-center">
+      <footer className="h-12 w-full flex justify-center items-center mt-12">
             <p className="text-center">Copyrigth Arthur Dias e Samuel Bispo 2025 &copy;</p>
       </footer>
     </div>
